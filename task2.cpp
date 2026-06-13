@@ -54,7 +54,6 @@ class Cache{
     CacheLevel L3;
     int ram_access=0;
 
-    // Streamlined helper function to handle the sequential cascading logic cleanly
     void runWaterfall(string block) {
         cout << "Promoting " << block << " to L1..." << endl;
         string ch = insert(L1, block);
@@ -90,14 +89,12 @@ class Cache{
     string insert(CacheLevel &level, string block){
         string evicted_block = "00";
         
-        // If the block already exists inside this specific level, do not duplicate it
         for(int i=0; i<level.slots.size(); i++){
             if(level.slots[i] == block){
                 return "00";
             }
         }
         
-        // FIX: Removed the 'string' re-declaration keyword here to fix variable shadowing
         if(level.slots.size() >= level.capacity){
             evicted_block = level.slots[0]; 
             level.slots.erase(level.slots.begin());
